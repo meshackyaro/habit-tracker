@@ -1,25 +1,63 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faChartSimple, faGear } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHouse,
+  faChartSimple,
+  faGear
+} from '@fortawesome/free-solid-svg-icons';
 
-const SideNavbar = ({ activeNav }) => (
-  <div className="w-[200px] bg-[rgba(20,20,20,0.8)] rounded-2xl h-full p-5">
-    <h2 className="text-xl font-semibold text-shadow-[1px_1px_greenyellow]">HabitBuddy</h2>
-    <ul className="mt-[100px] list-none">
-      {[
-        { icon: faHouse, label: "Today", nav: "dashboard" },
-        { icon: faChartSimple, label: "Statistics", nav: "stats" },
-        { icon: faGear, label: "Settings", nav: "settings" }
-      ].map((item) => (
-        <li key={item.nav} className={`p-4 mt-2.5 rounded-full ${activeNav === item.nav ? 'bg-[rgb(51,51,51)]' : 'hover:bg-[rgb(51,51,51)]'}`}>
-          <Link to='/' className={`flex gap-2.5 items-center ml-2.5 ${activeNav === item.nav ? 'text-greenyellow' : 'text-gray-500 hover:text-greenyellow'}`}>
-            <FontAwesomeIcon icon={item.icon} />
-            {item.label}
+const SideNavbar = ({ activeNav }) => {
+  return (
+    <div className="w-[200px] bg-[rgba(20,20,20,0.8)] rounded-2xl h-full p-5 hidden md:block" >
+      <h2 className="text-xl font-semibold text-shadow-[1px_1px_green-200]">
+        HabitBuddy
+      </h2>
+
+      <ul className="mt-[100px] list-none">
+        <li className={`p-4 mt-2.5 text-start rounded-full cursor-pointer transition-all duration-300 ${activeNav === "dashboard"
+          ? "bg-[rgb(51,51,51)]"
+          : "hover:bg-[rgb(51,51,51)] hover:text-yellow-200"
+          }`}>
+          <Link
+            to='/'
+            className={`text-gray-500 no-underline transition-all duration-300 flex gap-2.5 items-center ml-2.5 ${activeNav === "dashboard" ? "text-greenyellow" : "hover:text-yellow-200"
+              }`}
+          >
+            <FontAwesomeIcon icon={faHouse} />
+            Today
           </Link>
         </li>
-      ))}
-    </ul>
-  </div>
-);
+
+        <li className={`p-4 mt-2.5 text-start rounded-full cursor-pointer transition-all duration-300 ${activeNav === "stats"
+          ? "bg-[rgb(51,51,51)]"
+          : "hover:bg-[rgb(51,51,51)] hover:text-greenyellow"
+          }`}>
+          <Link
+            to='/'
+            className={`text-gray-500 no-underline transition-all duration-300 flex gap-2.5 items-center ml-2.5 ${activeNav === "stats" ? "text-greenyellow" : "hover:text-greenyellow"
+              }`}
+          >
+            <FontAwesomeIcon icon={faChartSimple} />
+            Statistics
+          </Link>
+        </li>
+
+        <li className={`p-4 mt-2.5 text-start rounded-full cursor-pointer transition-all duration-300 ${activeNav === "settings"
+          ? "bg-[rgb(51,51,51)]"
+          : "hover:bg-[rgb(51,51,51)] hover:text-greenyellow"
+          }`}>
+          <Link
+            to='/'
+            className={`text-gray-500 no-underline transition-all duration-300 flex gap-2.5 items-center ml-2.5 ${activeNav === "settings" ? "text-greenyellow" : "hover:text-greenyellow"
+              }`}
+          >
+            <FontAwesomeIcon icon={faGear} />
+            Settings
+          </Link>
+        </li>
+      </ul>
+    </div>
+  );
+};
 
 export default SideNavbar;

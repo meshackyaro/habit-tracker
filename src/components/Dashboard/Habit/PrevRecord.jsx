@@ -1,6 +1,5 @@
-import { useAppState } from "../../../../hooks/useAppState.jsx";
-import PrevData from "./prevData.jsx";
-
+import { useAppState } from "../../../hooks/useAppState";
+import PrevData from "./PrevData";
 
 const PrevRecord = ({ setShowPrevRecord, activeHabitData }) => {
   const { userData, activeUser } = useAppState();
@@ -23,7 +22,7 @@ const PrevRecord = ({ setShowPrevRecord, activeHabitData }) => {
         <div className="flex gap-5 flex-wrap mt-2.5 max-h-[500px] overflow-scroll">
           {userData.habitData[indexOfHabit].prevRecord.map((record, index) => (
             index > 0 && (
-              <PrevData
+              <PrevData 
                 key={index} 
                 record={record} 
                 index={index} 

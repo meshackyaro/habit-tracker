@@ -1,28 +1,33 @@
 import { useState } from "react";
 import { useAppState } from "../../hooks/useAppState";
-import waterIcon from "../../../assets/images/drop.png";
-import healthIcon from "../../../assets/images/healthcare.png";
-import gameIcon from "../../../assets/images/joystick.png";
-import workingIcon from '../../../assets/images/working.png';
-import sleepIcon from '../../../assets/images/sleep.png';
-import exerciseIcon from '../../../assets/images/running.png';
+import waterIcon from "../../assets/images/drop.png";
+import healthIcon from "../../assets/images/healthcare.png"
+import gameIcon from "../../assets/images/joystick.png";
+import workingIcon from '../../assets/images/working.png';
+import sleepIcon from '../../assets/images/sleep.png';
+import exerciseIcon from '../../assets/images/running.png';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const CreateHabit = ({ setCreateBoxStatus }) => {
-  const { userData, activeUser } = useAppState();
+  const { userData, activeUser, updateHabit } = useAppState(); // Added updateHabit
+
   const [habitName, setHabitName] = useState("");
   const [habitCount, setHabitCount] = useState(0);
   const [habitIcon, setHabitIcon] = useState(sleepIcon);
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
-    setCreateBoxStatus(false);
+
+    if (!habitName.trim()) {
+      console.error("Habit name cannot be empty");
+      return;
+    }
 
     const newHabit = {
       id: Date.now(),
       habitName,
-      habitCount,
+      habitCount: Math.max(0, habitCount), // Ensure non-negative
       habitIcon,
       countCompleted: 0,
       prevRecord: Array(7).fill(0).map((_, i) => {
@@ -36,25 +41,42 @@ const CreateHabit = ({ setCreateBoxStatus }) => {
       })
     };
 
+    console.log("Creating new habit:", newHabit); // Debug log
+
     const updatedUser = {
       ...userData,
-      habitData: [...(userData.habitData || []), newHabit]
+      habitData: [...(userData?.habitData || []), newHabit]
     };
 
+    console.log("Updated user data:", updatedUser); // Debug log
+
     activeUser(updatedUser);
+    setCreateBoxStatus(false);
+
+    // Reset form
+    setHabitName("");
+    setHabitCount(0);
+    setHabitIcon(sleepIcon);
   };
 
-  // Keep existing getFormattedDate function
   function getFormattedDate(date) {
-    // ... (same as before)
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'short' });
+    const year = date.getFullYear();
+    return {
+      formatted: `${month} ${day}, ${year}`,
+      day,
+      month,
+      year
+    };
   }
 
   return (
     <div className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-20">
       <div className="max-w-[350px] p-5 relative bg-[rgb(5,5,5)] rounded-2xl">
-        <h1 className="text-xl mb-5">Create Habit</h1>
+        <h1 className="text-xl mb-5 items-center">Create Habit</h1>
 
-        <span 
+        <span
           className="absolute -right-2.5 -top-2.5 bg-[rgb(5,5,5)] h-6 w-6 rounded-full border border-greenyellow flex items-center justify-center cursor-pointer"
           onClick={() => setCreateBoxStatus(false)}
         >
@@ -87,9 +109,9 @@ const CreateHabit = ({ setCreateBoxStatus }) => {
             <label>Select Icon: </label>
             <div className="flex flex-wrap justify-center gap-5 mt-2.5">
               {[gameIcon, healthIcon, waterIcon, exerciseIcon, workingIcon, sleepIcon].map((icon, i) => (
-                <div 
+                <div
                   key={i}
-                  className="h-[65px] w-[65px] bg-[rgb(36,36,36)] rounded-full flex items-center justify-center cursor-pointer hover:outline hover:outline-2 hover:outline-greenyellow"
+                  className="h-[65px] w-[65px] bg-[rgb(36,36,36)] rounded-full flex items-center justify-center cursor-pointer hover:outline hover:outline-greenyellow"
                   onClick={() => setHabitIcon(icon)}
                 >
                   <img src={icon} alt="" className="h-4/5 w-4/5 object-cover" />
@@ -98,9 +120,9 @@ const CreateHabit = ({ setCreateBoxStatus }) => {
             </div>
           </div>
 
-          <button 
+          <button
             type="submit"
-            className="w-[150px] h-8 mx-auto border-none rounded-3xl bg-greenyellow"
+            className="w-[150px] h-8 mx-auto border-none rounded-3xl bg-green-300"
           >
             Create Habit
           </button>

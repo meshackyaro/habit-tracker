@@ -32,11 +32,11 @@ export const useAppState = () => {
       userData: user,
       habitData: user?.habitData || []
     })),
-    createBox: (val) => setState(prev => ({
+    setCreateBox: (val) => setState(prev => ({
       ...prev,
       createBox: val
     })),
-    prevBox: (val) => setState(prev => ({
+    setPrevBox: (val) => setState(prev => ({
       ...prev,
       prevBox: val
     })),
