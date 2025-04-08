@@ -56,6 +56,19 @@ const SideNavbar = ({ activeNav }) => {
           </Link>
         </li>
       </ul>
+
+      {/* Logout Button */}
+<div className="mt-auto">
+  <button
+    className="flex items-center gap-2 p-3 rounded-lg bg-red-500 hover:bg-red-600 transition-all text-white w-full"
+    onClick={() => {
+      localStorage.removeItem("habitTrackerState"); // Clear user data from localStorage
+      window.location.href = "/"; // Navigate to the home page
+    }}
+  >
+    <span>Logout</span>
+  </button>
+</div>
     </div>
   );
 };

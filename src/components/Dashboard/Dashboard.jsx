@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import SideNavbar from "../Sidenavbar";
+import SideNavbar from "./Sidenavbar";
 import Habit from "./Habit";
 import CreateHabit from "./CreateHabit";
 import PrevRecord from "./Habit/Prevrecord";
@@ -9,6 +9,7 @@ export default function Dashboard() {
     const navigate = useNavigate();
     const {
         userData,
+        setUserData,
         createBoxStatus,
         setCreateBoxStatus,
         showPrevRecord,
@@ -25,7 +26,7 @@ export default function Dashboard() {
         if (!userData) {
             navigate("/");
         }
-    }, [userData]);
+    }, [userData, navigate]);
 
     // Date functions remain the same
     function getFormattedDate(date) {
@@ -61,7 +62,7 @@ export default function Dashboard() {
         }
     }
 
-    function getPreviousAndNextDates() {
+    function getPreviousAndNextDates(todayDate) {
         // ... (keep existing date calculation code)
         const today = new Date();
 
@@ -84,6 +85,16 @@ export default function Dashboard() {
     const todayDate = getFormattedDate(today);
     const datesList = getPreviousAndNextDates();
     const activeNav = statsBox ? "stats" : settingsBox ? "settings" : "dashboard";
+
+    // Reset Button Logic
+    const resetHabits = () => {
+        const updatedHabits = userData?.habitData?.map((habit) => ({
+            ...habit,
+            done: false, // Reset the "done" status for all habits
+        }));
+        setUserData({ ...userData, habitData: updatedHabits }); // Update the user data with reset habits
+    };
+
 
     return (
         <div className="flex h-screen p-5 bg-[#010101] text-white gap-5">
@@ -130,6 +141,14 @@ export default function Dashboard() {
                 onClick={() => setCreateBoxStatus(true)}
             >
                 Add Habit +
+            </button>
+
+            {/* Reset Button */}
+            <button
+                className="fixed bg-blue-500 text-lg py-3 px-5 rounded-full bottom-10 right-[150px] cursor-pointer transition-all duration-300 z-10 hover:shadow-[0_0_50px_0px_rgb(0,0,255)]"
+                onClick={resetHabits}
+            >
+                Reset Habits
             </button>
         </div>
     );
