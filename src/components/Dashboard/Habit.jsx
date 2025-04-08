@@ -3,7 +3,7 @@ import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { Progress, Select } from "antd";
 import { useAppState } from "../../hooks/useAppState";
 
-const Habit = ({ habit, index, setShowPrevRecord, setActiveHabitData }) => {
+const Habit = ({ habit, setShowPrevRecord, setActiveHabitData }) => {
   const { userData, activeUser } = useAppState();
   const [percent, setPercent] = useState(0);
   const [completedCount, setCompletedCount] = useState(habit.prevRecord[0].countCompleted);
@@ -36,7 +36,7 @@ const Habit = ({ habit, index, setShowPrevRecord, setActiveHabitData }) => {
       setPercent(0);
       return;
     }
-    
+
     setCompletedCount((prevCount) => {
       const newCount = prevCount - 1;
       if (newCount <= 0) {
@@ -72,21 +72,31 @@ const Habit = ({ habit, index, setShowPrevRecord, setActiveHabitData }) => {
 
   useEffect(() => {
     if (userData) {
-      const updatedUser = { ...userData };
-      updatedUser.habitData[index].prevRecord[0].status = statusChange;
-      updatedUser.habitData[index].prevRecord[0].countCompleted = completedCount;
+      const updatedUser = {
+        ...userData,
+        habitData: userData.habitData.map(h =>
+          h.id === habit.id ? {
+            ...h,
+            prevRecord: h.prevRecord.map((r, i) =>
+              i === 0 ? { ...r, status: statusChange, completedCount } : r
+            )
+          } : h
+        )
+      };
+      // updatedUser.habitData[index].prevRecord[0].status = statusChange;
+      // updatedUser.habitData[index].prevRecord[0].completedCount = completedCount;
       activeUser(updatedUser);
     }
   }, [statusChange, completedCount]);
 
   useEffect(() => {
-    if (habit.prevRecord[0].status === "Done" || 
-        (habit.habitCount === habit.prevRecord[0].countCompleted && habit.habitCount > 0)) {
+    if (habit.prevRecord[0].status === "Done" ||
+      (habit.habitCount === habit.prevRecord[0].countCompleted && habit.habitCount > 0)) {
       setPercent(100);
       setCompletedCount(habit.habitCount);
       setStatusChange("Done");
-    } else if (habit.prevRecord[0].countCompleted > 0 && 
-               habit.habitCount !== habit.prevRecord[0].countCompleted) {
+    } else if (habit.prevRecord[0].countCompleted > 0 &&
+      habit.habitCount !== habit.prevRecord[0].completedCount) {
       setPercent(((habit.prevRecord[0].countCompleted / habit.habitCount) * 100).toFixed(2));
       setStatusChange("Not Done");
     } else {
@@ -98,7 +108,7 @@ const Habit = ({ habit, index, setShowPrevRecord, setActiveHabitData }) => {
 
   return (
     <div className="p-5 w-[220px] bg-black rounded-2xl flex flex-col gap-2.5">
-      <div 
+      <div
         className="p-5 rounded-2xl bg-[rgb(26,26,26)] transition-all duration-300 cursor-pointer border-b border-greenyellow hover:bg-[rgb(15,15,15)]"
         onClick={() => showRecord(habit.id)}
       >
@@ -110,23 +120,23 @@ const Habit = ({ habit, index, setShowPrevRecord, setActiveHabitData }) => {
         </div>
 
         <div className="mt-2.5 flex justify-center">
-          <Progress 
-            type="circle" 
-            percent={percent} 
-            trailColor="rgba(228,228,228,0.308)"
+          <Progress
+            type="circle"
+            percent={percent}
+            trailColor="(228,228,228,0.308)"
             strokeColor="#FFFFFF"
           />
         </div>
       </div>
 
       <div className="h-10 w-full flex">
-        <button 
+        <button
           className="flex-1 border-0 text-white bg-[rgb(37,37,37)] cursor-pointer transition-all duration-300 rounded-l-[50px] hover:bg-[rgb(53,53,53)] hover:text-red-500"
           onClick={decline}
         >
           <MinusOutlined />
         </button>
-        <button 
+        <button
           className="flex-1 border-0 text-white bg-[rgb(37,37,37)] cursor-pointer transition-all duration-300 rounded-r-[50px] hover:bg-[rgb(53,53,53)] hover:text-greenyellow"
           onClick={increase}
         >

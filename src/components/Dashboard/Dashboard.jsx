@@ -25,6 +25,8 @@ export default function Dashboard() {
         if (!userData) {
             navigate("/");
         }
+        console.log("User Data:", userData);
+
     }, [userData]);
 
     // Date functions remain the same
@@ -110,15 +112,17 @@ export default function Dashboard() {
 
                 <h2 className="mt-7">Today's Habits</h2>
                 <div className="flex gap-5 mt-2.5 w-full overflow-auto">
-                    {userData?.habitData?.map((habit, index) => (
-                        <Habit
-                            key={index}
-                            habit={habit}
-                            index={index}
-                            setShowPrevRecord={setShowPrevRecord}
-                            setActiveHabitData={setActiveHabitData}
-                        />
-                    ))}
+                    {userData?.habitData?.map((habit, index) => {
+                        return (
+                            <Habit
+                                key={habit.id}
+                                habit={habit}
+                                index={index}
+                                setShowPrevRecord={setShowPrevRecord}
+                                setActiveHabitData={setActiveHabitData}
+                            />
+                        );
+                    })}
                 </div>
             </div>
 

@@ -41,6 +41,7 @@ const CreateHabit = ({ setCreateBoxStatus }) => {
       })
     };
 
+
     console.log("Creating new habit:", newHabit); // Debug log
 
     const updatedUser = {
@@ -49,8 +50,9 @@ const CreateHabit = ({ setCreateBoxStatus }) => {
     };
 
     console.log("Updated user data:", updatedUser); // Debug log
-
-    activeUser(updatedUser);
+    const newData = JSON.stringify({ userData: updatedUser })
+    localStorage.setItem('habitTrackerState', newData)
+    //activeUser(updatedUser);
     setCreateBoxStatus(false);
 
     // Reset form
@@ -77,7 +79,7 @@ const CreateHabit = ({ setCreateBoxStatus }) => {
         <h1 className="text-xl mb-5 items-center">Create Habit</h1>
 
         <span
-          className="absolute -right-2.5 -top-2.5 bg-[rgb(5,5,5)] h-6 w-6 rounded-full border border-greenyellow flex items-center justify-center cursor-pointer"
+          className="absolute -right-2.5 -top-2.5 bg-[rgb(5,5,5)] h-6 w-6 rounded-full border border-yellow-400 flex items-center justify-center cursor-pointer"
           onClick={() => setCreateBoxStatus(false)}
         >
           <FontAwesomeIcon icon={faXmark} size="xs" />

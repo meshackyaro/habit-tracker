@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react';
 
 export const useAppState = () => {
+
   const [state, setState] = useState(() => {
     const savedState = localStorage.getItem('habitTrackerState');
-    return savedState 
-      ? JSON.parse(savedState) 
-      : {
-          userData: null,
-          createBox: false,
-          prevBox: false,
-          activeHabit: null,
-          habitData: []
-        };
+    return savedState ? JSON.parse(savedState) : {
+      userData: {  // All data now nested under userData
+        name: '',
+        gender: '',
+        habitData: []  // Habits now ONLY live here
+      },
+      createBox: false,
+      prevBox: false,
+      activeHabit: null
+    };
   });
 
   useEffect(() => {
@@ -25,7 +27,7 @@ export const useAppState = () => {
     prevBox: state.prevBox,
     activeHabit: state.activeHabit,
     habitData: state.habitData,
-    
+
     // Action functions
     activeUser: (user) => setState(prev => ({
       ...prev,
@@ -46,8 +48,8 @@ export const useAppState = () => {
     })),
     updateHabit: (updatedHabit) => setState(prev => {
       if (!prev.userData) return prev;
-      
-      const updatedHabitData = prev.habitData.map(habit => 
+
+      const updatedHabitData = prev.habitData.map(habit =>
         habit.id === updatedHabit.id ? updatedHabit : habit
       );
 
@@ -62,9 +64,9 @@ export const useAppState = () => {
     }),
     deleteHabit: (habitId) => setState(prev => {
       if (!prev.userData) return prev;
-      
+
       const filteredHabits = prev.habitData.filter(habit => habit.id !== habitId);
-      
+
       return {
         ...prev,
         habitData: filteredHabits,

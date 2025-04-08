@@ -1,1 +1,28 @@
 @import "tailwindcss";
+
+body {
+    background-color: black;
+    color: rgb(84, 219, 66);
+  }
+  
+  .ant-progress-circle-trail {
+    stroke: rgba(228, 228, 228, 0.308) !important;
+  }
+  .ant-progress-text {
+    color: rgb(245, 251, 242) !important;
+  }
+  
+  .ant-select-item-option {
+    color: white !important;
+  }
+  .ant-select-item-option:hover {
+    background-color: rgb(18, 18, 18) !important;
+    color: #80b532 !important;
+  }
+  .ant-select-item-option-selected {
+    color: #93d234 !important;
+    background-color: transparent !important;
+  }
+  .ant-select-dropdown {
+    background-color: rgb(32, 32, 32) !important;
+  }
