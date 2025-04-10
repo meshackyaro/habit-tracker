@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import SideNavbar from "../SideNavBar";
+import SideNavbar from "../SideNavbar";
 import Habit from "./Habit";
 import CreateHabit from "./CreateHabit";
 import PrevRecord from "./Habit/PrevRecord";
