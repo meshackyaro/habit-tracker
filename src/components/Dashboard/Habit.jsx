@@ -52,7 +52,7 @@ const Habit = ({ habit, setShowPrevRecord, setActiveHabitData }) => {
   };
 
   const showRecord = (id) => {
-    const habitData = userData.habitData.filter(habit => habit.id === id);
+    const habitData = userData?.habitData.filter(habit => habit.id === id);
     setActiveHabitData(habitData);
     setShowPrevRecord(true);
   };

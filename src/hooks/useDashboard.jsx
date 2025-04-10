@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useAppState } from './useAppState';
+
 
 export const useDashboard = () => {
-    const { userData, activeUser } = useAppState();
+    
     const [createBoxStatus, setCreateBoxStatus] = useState(false);
     const [showPrevRecord, setShowPrevRecord] = useState(false);
     const [activeHabitData, setActiveHabitData] = useState(null);
@@ -10,8 +10,6 @@ export const useDashboard = () => {
     const [statsBox, setStatsBox] = useState(false);
 
     return {
-        userData,
-        activeUser,
         createBoxStatus,
         setCreateBoxStatus,
         showPrevRecord,

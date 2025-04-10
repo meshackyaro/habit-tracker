@@ -9,8 +9,9 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={!userData ? <WelcomePage /> : <Dashboard />} />
+        {/*<Route path="/" element={!userData ? <WelcomePage /> : <Dashboard />} />*/}
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/" element={<WelcomePage />} />
       </Routes>
     </div>
   );

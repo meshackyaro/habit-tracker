@@ -41,18 +41,18 @@ const CreateHabit = ({ setCreateBoxStatus }) => {
       })
     };
 
-
     console.log("Creating new habit:", newHabit); // Debug log
 
     const updatedUser = {
       ...userData,
-      habitData: [...(userData?.habitData || []), newHabit]
+      habitData: [...(userData?.habitData || []),  newHabit]
     };
 
     console.log("Updated user data:", updatedUser); // Debug log
-    const newData = JSON.stringify({ userData: updatedUser })
-    localStorage.setItem('habitTrackerState', newData)
-    //activeUser(updatedUser);
+    const newData = JSON.stringify({userData:updatedUser})
+    localStorage.setItem('habitTrackerState',newData)
+    //console.log("Updated user data in localStorage:", newData); // Debug log
+    activeUser(updatedUser);
     setCreateBoxStatus(false);
 
     // Reset form
@@ -76,10 +76,10 @@ const CreateHabit = ({ setCreateBoxStatus }) => {
   return (
     <div className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-20">
       <div className="max-w-[350px] p-5 relative bg-[rgb(5,5,5)] rounded-2xl">
-        <h1 className="text-xl mb-5 items-center">Create Habit</h1>
+        <h1 className="text-3xl mb-5 text-center font-bold">Create Habit</h1>
 
         <span
-          className="absolute -right-2.5 -top-2.5 bg-[rgb(5,5,5)] h-6 w-6 rounded-full border border-yellow-400 flex items-center justify-center cursor-pointer"
+          className="absolute -right-2.5 -top-2.5 bg-[rgb(5,5,5)] h-6 w-6 rounded-full border border-greenyellow flex items-center justify-center cursor-pointer"
           onClick={() => setCreateBoxStatus(false)}
         >
           <FontAwesomeIcon icon={faXmark} size="xs" />
@@ -113,7 +113,7 @@ const CreateHabit = ({ setCreateBoxStatus }) => {
               {[gameIcon, healthIcon, waterIcon, exerciseIcon, workingIcon, sleepIcon].map((icon, i) => (
                 <div
                   key={i}
-                  className="h-[65px] w-[65px] bg-[rgb(36,36,36)] rounded-full flex items-center justify-center cursor-pointer hover:outline hover:outline-greenyellow"
+                  className="h-[65px] w-[65px] bg-[rgb(36,36,36)] rounded-full flex items-center justify-center cursor-pointer hover:outline hover:outline-lime-300"
                   onClick={() => setHabitIcon(icon)}
                 >
                   <img src={icon} alt="" className="h-4/5 w-4/5 object-cover" />
@@ -124,7 +124,7 @@ const CreateHabit = ({ setCreateBoxStatus }) => {
 
           <button
             type="submit"
-            className="w-[150px] h-8 mx-auto border-none rounded-3xl bg-green-300"
+            className="w-[150px] h-8 mx-auto border-none rounded-3xl bg-[#ADFF2F] font-light text-black transition-all duration-300 hover:shadow-[0_0_50px_0px_rgb(170,255,0)]"
           >
             Create Habit
           </button>

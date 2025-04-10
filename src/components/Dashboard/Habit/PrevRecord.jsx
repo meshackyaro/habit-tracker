@@ -25,8 +25,8 @@ const PrevRecord = ({ setShowPrevRecord, activeHabitData }) => {
 
   return (
     <div className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-20 p-10">
-      <div className="p-5 relative bg-[rgb(5,5,5)] rounded-2xl max-w-[700px] w-full text-white">
-        <h1 className="text-2xl font-bold mb-2">{activeHabitData[0].habitName}</h1>
+      <div className="p-5 relative bg-[rgb(5,5,5)] rounded-2xl font-bold max-w-[700px] w-full text-white">
+        <h1 className="text-2xl text-center font-bold mb-2">{activeHabitData[0].habitName}</h1>
         <h3 className="text-start text-lg mb-2">Previous Records</h3>
 
         <div className="flex gap-5 flex-wrap mt-2.5 max-h-[500px] overflow-y-scroll pr-2">
@@ -46,7 +46,7 @@ const PrevRecord = ({ setShowPrevRecord, activeHabitData }) => {
         </div>
 
         <button
-          className="mt-5 outline-none border-none bg-[rgb(255,46,46)] text-white py-2.5 px-5 rounded-[40px] cursor-pointer"
+          className="mt-5 outline-none text-center border-none bg-[rgb(255,46,46)] text-white py-2.5 px-5 rounded-[40px] cursor-pointer"
           onClick={deleteHabit}
         >
           Delete habit

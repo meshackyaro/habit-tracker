@@ -18,6 +18,8 @@ export const useAppState = () => {
 
   useEffect(() => {
     localStorage.setItem('habitTrackerState', JSON.stringify(state));
+    console.log("State updated:", state); // Debug log
+    
   }, [state]);
 
   return {
