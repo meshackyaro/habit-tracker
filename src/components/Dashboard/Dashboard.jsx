@@ -98,9 +98,11 @@ const Dashboard = () => {
     const resetHabits = () => {
         const updatedHabits = userData?.habitData?.map((habit) => ({
             ...habit,
-            done: false, // Reset the "done" status for all habits
+            countCompleted: 0, // Reset the "done" status for all habits
         }));
-        // setUserData({ ...userData, habitData: updatedHabits }); // Update the user data with reset habits
+        console.log("Updated habits after reset:", updatedHabits); // Debug log
+        
+        setUserData({ ...userData, habitData: updatedHabits }); // Update the user data with reset habits
     };
 
     return (

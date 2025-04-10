@@ -18,6 +18,8 @@ const PrevRecord = ({ setShowPrevRecord, activeHabitData }) => {
         habit => habit.id !== activeHabitData[0].id
       );
       const updatedUser = { ...userData, habitData: updatedData };
+      const newData = JSON.stringify({ userData: updatedUser })
+      localStorage.setItem('habitTrackerState', newData)
       activeUser(updatedUser);
       setShowPrevRecord(false);
     }
