@@ -1,5 +1,7 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAppState } from "../../../hooks/useAppState";
 import PrevData from "./PrevData";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const PrevRecord = ({ setShowPrevRecord, activeHabitData }) => {
   const { userData, activeUser } = useAppState();
@@ -26,6 +28,12 @@ const PrevRecord = ({ setShowPrevRecord, activeHabitData }) => {
   return (
     <div className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-20 p-10">
       <div className="p-5 relative bg-[rgb(5,5,5)] rounded-2xl font-bold max-w-[700px] w-full text-white">
+        <span
+          className="absolute -right-2.5 -top-2.5 bg-[rgb(5,5,5)] h-6 w-6 rounded-full border border-lime-300 flex items-center justify-center cursor-pointer hover:bg-green-700"
+          onClick={() => setShowPrevRecord(false)}
+        >
+          <FontAwesomeIcon icon={faXmark} size="xs" />
+        </span>
         <h1 className="text-2xl text-center font-bold mb-2">{activeHabitData[0].habitName}</h1>
         <h3 className="text-start text-lg mb-2">Previous Records</h3>
 
