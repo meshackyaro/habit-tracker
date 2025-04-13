@@ -44,7 +44,7 @@ const SideNavbar = ({ activeNav }) => {
             }`}
           >
             <Link
-              to="/"
+              to="/statistics"
               className={`text-gray-500 no-underline transition-all duration-300 flex gap-2.5 items-center ml-2.5 ${
                 activeNav === "stats" ? "text-lime-300" : "hover:text-lime-300"
               }`}

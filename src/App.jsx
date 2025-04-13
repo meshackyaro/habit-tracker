@@ -3,6 +3,7 @@ import { useAppState } from "./hooks/useAppState";
 import WelcomePage from "./components/WelcomePage";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Settings from "./components/Settings"
+import Statistics from "./components/Statistics";
 
 function App() {
   const { userData } = useAppState();
@@ -11,8 +12,9 @@ function App() {
     <div className="App">
       <Routes>
         {/*<Route path="/" element={!userData ? <WelcomePage /> : <Dashboard />} />*/}
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/" element={<WelcomePage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/statistics" element={<Statistics />} />
         <Route path="/settings" element={<Settings />} />
       </Routes>
     </div>
