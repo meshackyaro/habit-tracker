@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faDownload } from "@fortawesome/free-solid-svg-icons";
 
 function Settings() {
   const [theme, setTheme] = useState("dark");
@@ -17,6 +17,22 @@ function Settings() {
     );
     setShowSuccess(true);
     setTimeout(() => setShowSuccess(false), 2000); // Hide after 2s
+  };
+
+  // Add the handleExport function here
+  const handleExport = () => {
+    const data = localStorage.getItem("habitTrackerState"); // Get raw string
+    if (!data) {
+      alert("No habit data found to export!");
+      return;
+    }
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "habits.json";
+    link.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -75,6 +91,18 @@ function Settings() {
           onChange={(e) => setUsername(e.target.value)}
           className="w-full p-2 bg-gray-900 text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-300"
         />
+      </div>
+
+      {/* Data Management Section */}
+      <div className="bg-[rgb(51,51,51)] rounded-2xl p-5 mb-5">
+        <h2 className="text-xl text-gray-300 mb-3">Data Management</h2>
+        <button
+          onClick={handleExport}
+          className="flex items-center gap-2 p-2 bg-gray-900 text-gray-300 rounded-lg hover:bg-gray-700 transition-all duration-300"
+        >
+          <FontAwesomeIcon icon={faDownload} />
+          Export Habits
+        </button>
       </div>
 
       {/* Save Button */}
