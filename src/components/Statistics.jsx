@@ -6,6 +6,9 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
 } from "recharts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFire, faTrophy } from "@fortawesome/free-solid-svg-icons";
@@ -68,7 +71,7 @@ function Statistics() {
     0
   );
 
-  // Prepare chart data (last 7 days)
+  // Prepare bar chart data (last 7 days)
   const today = new Date();
   const chartData = Array.from({ length: 7 }, (_, i) => {
     const date = new Date(today);
@@ -80,6 +83,19 @@ function Statistics() {
     );
     return { date: dateStr.slice(5, 10), completions };
   });
+
+  // Prepare pie chart data
+  const categoryData = habits.reduce((acc, habit) => {
+    acc[habit.category] = (acc[habit.category] || 0) + 1;
+    return acc;
+  }, {});
+  const pieData = Object.entries(categoryData).map(([name, value]) => ({
+    name,
+    value,
+  }));
+
+  // Colors for pie chart slices
+  const COLORS = ["#84CC16", "#A3E635", "#D4D4D8", "#9CA3AF"]; // Lime shades and grays
 
   return (
     <div className="p-5 max-w-4xl mx-auto">
@@ -122,8 +138,8 @@ function Statistics() {
         </div>
       </div>
 
-      {/* Chart */}
-      <div className="bg-[rgb(51,51,51)] rounded-2xl p-5">
+      {/* Bar Chart */}
+      <div className="bg-[rgb(51,51,51)] rounded-2xl p-5 mb-5">
         <h2 className="text-xl text-gray-300 mb-3">Completion Trend</h2>
         <div style={{ height: "300px" }}>
           <ResponsiveContainer width="100%" height="100%">
@@ -139,6 +155,44 @@ function Statistics() {
               />
               <Bar dataKey="completions" fill="#84CC16" />
             </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      {/* Pie Chart */}
+      <div className="bg-[rgb(51,51,51)] rounded-2xl p-5">
+        <h2 className="text-xl text-gray-300 mb-3">Habits by Category</h2>
+        <div
+          style={{ height: "250px", display: "flex", justifyContent: "center" }}
+        >
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                data={pieData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                label={({ name, percent }) =>
+                  `${name} (${(percent * 100).toFixed(0)}%)`
+                }
+              >
+                {pieData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#333",
+                  border: "none",
+                  color: "#D4D4D8",
+                }}
+              />
+            </PieChart>
           </ResponsiveContainer>
         </div>
       </div>

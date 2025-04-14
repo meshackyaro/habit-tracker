@@ -26,3 +26,69 @@ body {
   .ant-select-dropdown {
     background-color: rgb(32, 32, 32) !important;
   }
+
+  /* Default dark theme */
+:root, [data-theme="dark"] {
+  --background: rgba(20, 20, 20, 0.8);
+  --card-bg: rgb(51, 51, 51);
+  --text-primary: #D4D4D8; /* gray-300 */
+  --text-secondary: #9CA3AF; /* gray-400 */
+  --accent: #84CC16; /* lime-300 */
+  --button-bg: #1F2937; /* gray-900 */
+  --button-hover: #374151; /* gray-700 */
+}
+
+/* Light theme */
+[data-theme="light"] {
+  --background: #F3F4F6; /* gray-100 */
+  --card-bg: #FFFFFF; /* white */
+  --text-primary: #1F2937; /* gray-900 */
+  --text-secondary: #4B5563; /* gray-600 */
+  --accent: #65A30D; /* lime-500, darker for contrast */
+  --button-bg: #E5E7EB; /* gray-200 */
+  --button-hover: #D1D5DB; /* gray-300 */
+}
+
+/* Apply variables */
+body {
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+/* Update Tailwind-like classes */
+.bg-\[rgb\(51\,51\,51\)\] {
+  background: var(--card-bg);
+}
+
+.text-lime-300 {
+  color: var(--accent);
+}
+
+.text-gray-300 {
+  color: var(--text-primary);
+}
+
+.text-gray-400 {
+  color: var(--text-secondary);
+}
+
+.bg-gray-900 {
+  background: var(--button-bg);
+}
+
+.bg-gray-900:hover {
+  background: var(--button-hover);
+}
+
+.focus\:ring-lime-300:focus {
+  --tw-ring-color: var(--accent);
+}
+
+/* Fix specific SideNavbar styles */
+.text-shadow-\[1px_1px_green-200\] {
+  text-shadow: 1px 1px var(--accent);
+}
+
+.hover\:text-yellow-200:hover {
+  color: var(--accent); /* Replace yellow-200 with accent */
+}
