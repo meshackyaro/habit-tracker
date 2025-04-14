@@ -14,7 +14,8 @@ function App() {
   return (
     <div className="App" data-theme={theme}>
       <Routes>
-        {<Route path="/" element={!userData ? <WelcomePage /> : <Dashboard />} />} />
+        {/* <Route path="/" element={!userData ? <WelcomePage /> : <Dashboard />} /> */}
+        <Route path="/" element={<WelcomePage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/statistics" element={<Statistics />} />
         <Route path="/settings" element={<Settings />} />

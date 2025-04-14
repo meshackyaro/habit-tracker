@@ -77,18 +77,20 @@ const SideNavbar = ({ activeNav }) => {
       </div>
 
       {/* Logout Button */}
-      <div className="mt-40 flex items-center justify-center">
-        <button
-          className="flex gap-2.5 p-3 ml-2.5 items-center text-gray-500 rounded-lg bg-gray-900 hover:bg-gray-600 transition-all duration-300 cursor-pointer  w-full hover:text-red-400"
-          onClick={() => {
-            localStorage.removeItem("habitTrackerState"); // Clear user data from localStorage
-            window.location.href = "/"; // Navigate to the home page
-          }}
-        >
-          <FontAwesomeIcon icon={faRightFromBracket} flip="horizontal" />
-          <span>Logout</span>
-        </button>
-      </div>
+      <Link to="/">
+        <div className="mt-40 flex items-center justify-center">
+          <button
+            className="flex gap-2.5 p-3 ml-2.5 items-center text-gray-500 rounded-lg bg-gray-900 hover:bg-gray-600 transition-all duration-300 cursor-pointer  w-full hover:text-red-400"
+            onClick={() => {
+              localStorage.removeItem("habitTrackerState"); // Clear user data from localStorage
+              window.location.href = "/"; // Navigate to the home page
+            }}
+          >
+            <FontAwesomeIcon icon={faRightFromBracket} flip="horizontal" />
+            <span>Logout</span>
+          </button>
+        </div>
+      </Link>
     </div>
   );
 };
