@@ -5,7 +5,7 @@ import Habit from "./Habit";
 import CreateHabit from "./CreateHabit";
 import PrevRecord from "./Habit/PrevRecord";
 import { useDashboard } from "../../hooks/useDashboard";
-import { useAppState } from "../../hooks/useAppState";
+// import { useAppState } from "../../hooks/useAppState";
 const Dashboard = () => {
     const navigate = useNavigate();
     // const { userData } = useAppState();
@@ -18,9 +18,9 @@ const Dashboard = () => {
         activeHabitData,
         setActiveHabitData,
         settingsBox,
-        setSettingsBox,
+        // setSettingsBox,
         statsBox,
-        setStatsBox
+        // setStatsBox
     } = useDashboard();
 
     const view = localStorage.getItem("habitTrackerState")
@@ -95,14 +95,28 @@ const Dashboard = () => {
     const activeNav = statsBox ? "stats" : settingsBox ? "settings" : "dashboard";
 
     // Reset Button Logic
-    const resetHabits = () => {
-        const updatedHabits = userData?.habitData?.map((habit) => ({
-            ...habit,
-            countCompleted: 0, // Reset the "done" status for all habits
-        }));
-        console.log("Updated habits after reset:", updatedHabits); // Debug log
+    // const resetHabits = () => {
+    //     const updatedHabits = userData?.habitData?.map((habit) => ({
+    //         ...habit,
+    //         countCompleted: 0, // Reset the "done" status for all habits
+    //     }));
+    //     console.log("Updated habits after reset:", updatedHabits); // Debug log
         
-        setUserData({ ...userData, habitData: updatedHabits }); // Update the user data with reset habits
+    //     setUserData({ ...userData, habitData: updatedHabits }); // Update the user data with reset habits
+    // };
+    const resetHabits = () => {
+      if (
+        window.confirm(
+          "Are you sure you want to clear all habits? This cannot be undone."
+        )
+      ) {
+        const updatedUserData = { ...userData, habitData: [] };
+        setUserData(updatedUserData);
+        localStorage.setItem(
+          "habitTrackerState",
+          JSON.stringify({ userData: updatedUserData })
+        );
+      }
     };
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
