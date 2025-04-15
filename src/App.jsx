@@ -3,7 +3,7 @@ import { useAppState } from "./hooks/useAppState";
 import WelcomePage from "./components/WelcomePage";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Settings from "./components/Settings";
-import Statistics from "./components/Statistics"
+import Statistics from "./components/Statistics";
 import { useSettings } from "./context/SettingsContext";
 
 
