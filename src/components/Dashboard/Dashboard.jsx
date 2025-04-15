@@ -104,84 +104,79 @@ const Dashboard = () => {
         
         setUserData({ ...userData, habitData: updatedHabits }); // Update the user data with reset habits
     };
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     return (
-        <div className="flex  h-auto p-5 bg-[#010101] text-white gap-5">
-            <SideNavbar activeNav={activeNav} />
-
-            <div className="rounded-2xl  p-5 w-[calc(100%-220px)] text-start bg-[rgba(20,20,20,0.8)]">
-                <h1 className="greeting-user font-extrabold text-3xl">
-                    Welcome {userData ? userData.name : "Fetching..."}!
-                </h1>
-
-                <div className="w-full overflow-auto flex gap-2.5 my-2.5">
-                    {datesList.map((date, index) => (
-                        <div
-                            key={index}
-                            className={`h-20 min-w-[70px] rounded-lg bg-[rgb(27,27,27)] flex flex-col items-center justify-center ${date.formatted === todayDate.formatted ? 'bg-lime-300 text-black' : ''
-                                }`}
-                        >
-                            <span className="font-bold">{date.dayOfWeek}</span>
-                            <span className="font-bold">{date.day}</span>
-                            <span className="font-bold">{date.month}</span>
-                        </div>
-                    ))}
-                </div>
-
-                <h2 className="mt-7 font-bold text-xl">Today's Habits</h2>
-                <div className="flex gap-5 mt-2.5 w-full overflow-none flex-wrap">
-
-                    {userData?.habitData?.map((habit, index) => {
-                        return (
-                            <Habit
-                                key={habit.id} // Changed from index to habit.id
-                                habit={habit}
-                                index={index}
-                                setShowPrevRecord={setShowPrevRecord}
-                                setActiveHabitData={setActiveHabitData}
-                            />
-                        );
-
-                    })}
-                </div>
-
-                <div className="button-container mt-5">
-                    <button
-                        className="bg-blue-500 text-lg py-3 px-5 rounded-full cursor-pointer transition-all duration-300 hover:shadow-[0_0_50px_0px_rgb(0,0,255)]"
-                        onClick={resetHabits}
-                    >
-                        Reset Habits
-                    </button>
-                    <button
-                        className="bg-green-400 text-lg py-3 px-5 rounded-full cursor-pointer transition-all duration-300 hover:shadow-[0_0_50px_0px_rgb(170,255,0)]"
-                        onClick={() => setCreateBoxStatus(true)}
-                    >
-                        Add Habit +
-                    </button>
-                </div>
-                <style>{`
-                    .button-container {
-                        display: flex;
-                        justify-content: space-between;
-                        padding: 0 20px;
-                        z-index: 10;
-                        over-flow: hidden;
-                    }
-                `}</style>
-            </div>
-
-            {createBoxStatus && (
-                <CreateHabit setCreateBoxStatus={setCreateBoxStatus} />
-            )}
-            {showPrevRecord && (
-                <PrevRecord
-                    setShowPrevRecord={setShowPrevRecord}
-                    activeHabitData={activeHabitData}
-                />
-            )}
-
+        <div className="flex flex-col md:flex-row h-auto p-2 md:p-5 bg-[#010101] text-white gap-3 md:gap-5">
+        <SideNavbar activeNav={activeNav} />
+      
+        <div className="rounded-2xl p-3 md:p-5 w-full md:w-[calc(100%-220px)] text-start bg-[rgba(20,20,20,0.8)]">
+          <h1 className="greeting-user font-extrabold text-2xl md:text-3xl">
+            Welcome {userData ? userData.name : "Fetching..."}!
+          </h1>
+      
+          {/* Date Picker - Horizontal Scroll on Mobile */}
+          <div className="w-full overflow-x-auto pb-2 flex gap-2 my-2 md:gap-2.5 md:my-2.5">
+            {datesList.map((date, index) => (
+              <div
+                key={index}
+                className={`h-16 md:h-20 min-w-[60px] md:min-w-[70px] rounded-lg bg-[rgb(27,27,27)] flex flex-col items-center justify-center text-sm md:text-base ${
+                  date.formatted === todayDate.formatted 
+                    ? 'bg-lime-300 text-black' 
+                    : ''
+                }`}
+              >
+                <span className="font-bold">{date.dayOfWeek}</span>
+                <span className="font-bold">{date.day}</span>
+                <span className="font-bold">{date.month}</span>
+              </div>
+            ))}
+          </div>
+      
+          <h2 className="mt-5 md:mt-7 font-bold text-lg md:text-xl">Today's Habits</h2>
+          
+          {/* Habits Grid - Stack on mobile, flex-wrap on desktop */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 mt-2 md:mt-2.5 w-full">
+            {userData?.habitData?.map((habit, index) => (
+              <Habit
+                key={habit.id}
+                habit={habit}
+                index={index}
+                setShowPrevRecord={setShowPrevRecord}
+                setActiveHabitData={setActiveHabitData}
+              />
+            ))}
+          </div>
+      
+          {/* Button Container - Stack on mobile, row on desktop */}
+          <div className="flex flex-col sm:flex-row justify-between gap-3 mt-4 md:mt-5 px-2 md:px-5 z-10">
+            <button
+              className="bg-blue-500 text-base md:text-lg py-2 px-4 md:py-3 md:px-5 rounded-full cursor-pointer transition-all duration-300 hover:shadow-[0_0_20px_0px_rgb(0,0,255)] md:hover:shadow-[0_0_50px_0px_rgb(0,0,255)]"
+              onClick={resetHabits}
+            >
+              Reset Habits
+            </button>
+            <button
+              className="bg-green-400 text-base md:text-lg py-2 px-4 md:py-3 md:px-5 rounded-full cursor-pointer transition-all duration-300 hover:shadow-[0_0_20px_0px_rgb(170,255,0)] md:hover:shadow-[0_0_50px_0px_rgb(170,255,0)]"
+              onClick={() => setCreateBoxStatus(true)}
+            >
+              Add Habit +
+            </button>
+          </div>
         </div>
-    );
-}
+      
+        {/* Modals - These should already be responsive */}
+        {createBoxStatus && (
+          <CreateHabit setCreateBoxStatus={setCreateBoxStatus} />
+        )}
+        {showPrevRecord && (
+          <PrevRecord
+            setShowPrevRecord={setShowPrevRecord}
+            activeHabitData={activeHabitData}
+          />
+        )}
+      </div>
+    )
+};
 
 export default Dashboard;
