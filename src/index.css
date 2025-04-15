@@ -1,57 +1,75 @@
 @import "tailwindcss";
 
 body {
-    background-color: black;
-    color: rgb(84, 219, 66);
-  }
-  
-  .transition-all {
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 150ms;
-  }
-  .ant-progress-circle-trail {
-    stroke: rgba(228, 228, 228, 0.308) !important;
-  }
-  .ant-progress-text {
-    color: rgb(245, 251, 242) !important;
-  }
-  
-  .ant-select-item-option {
-    color: white !important;
-  }
-  .ant-select-item-option:hover {
-    background-color: rgb(18, 18, 18) !important;
-    color: #80b532 !important;
-  }
-  .ant-select-item-option-selected {
-    color: #93d234 !important;
-    background-color: transparent !important;
-  }
-  .ant-select-dropdown {
-    background-color: rgb(32, 32, 32) !important;
-  }
+  background-color: black;
+  color: rgb(84, 219, 66);
+}
 
-  /* Default dark theme */
-:root, [data-theme="dark"] {
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.ant-progress-circle-trail {
+  stroke: rgba(228, 228, 228, 0.308) !important;
+}
+
+.ant-progress-text {
+  color: rgb(245, 251, 242);
+}
+
+.ant-select-item-option {
+  color: white !important;
+}
+
+.ant-select-item-option:hover {
+  background-color: rgb(18, 18, 18) !important;
+  color: #80b532 !important;
+}
+
+.ant-select-item-option-selected {
+  color: #93d234 !important;
+  background-color: transparent !important;
+}
+
+.ant-select-dropdown {
+  background-color: rgb(32, 32, 32) !important;
+}
+
+/* Default dark theme */
+:root,
+[data-theme="dark"] {
   --background: rgba(20, 20, 20, 0.8);
   --card-bg: rgb(51, 51, 51);
-  --text-primary: #D4D4D8; /* gray-300 */
-  --text-secondary: #9CA3AF; /* gray-400 */
-  --accent: #84CC16; /* lime-300 */
-  --button-bg: #1F2937; /* gray-900 */
-  --button-hover: #374151; /* gray-700 */
+  --text-primary: #D4D4D8;
+  /* gray-300 */
+  --text-secondary: #9CA3AF;
+  /* gray-400 */
+  --accent: #84CC16;
+  /* lime-300 */
+  --button-bg: #1F2937;
+  /* gray-900 */
+  --button-hover: #374151;
+  /* gray-700 */
 }
 
 /* Light theme */
 [data-theme="light"] {
-  --background: #F3F4F6; /* gray-100 */
-  --card-bg: #FFFFFF; /* white */
-  --text-primary: #1F2937; /* gray-900 */
-  --text-secondary: #4B5563; /* gray-600 */
-  --accent: #65A30D; /* lime-500, darker for contrast */
-  --button-bg: #E5E7EB; /* gray-200 */
-  --button-hover: #D1D5DB; /* gray-300 */
+  --background: #F3F4F6;
+  /* gray-100 */
+  --card-bg: #FFFFFF;
+  /* white */
+  --text-primary: #1F2937;
+  /* gray-900 */
+  --text-secondary: #4B5563;
+  /* gray-600 */
+  --accent: #65A30D;
+  /* lime-500, darker for contrast */
+  --button-bg: #E5E7EB;
+  /* gray-200 */
+  --button-hover: #D1D5DB;
+  /* gray-300 */
 }
 
 /* Apply variables */
@@ -60,7 +78,7 @@ body {
   color: var(--text-primary);
 }
 
-/* Update Tailwind-like classes */
+/* Updates Tailwind-like classes */
 .bg-\[rgb\(51\,51\,51\)\] {
   background: var(--card-bg);
 }
@@ -95,5 +113,6 @@ body {
 }
 
 .hover\:text-yellow-200:hover {
-  color: var(--accent); /* Replace yellow-200 with accent */
+  color: var(--accent);
+  /* Replace yellow-200 with accent */
 }

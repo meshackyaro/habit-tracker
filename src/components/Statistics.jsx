@@ -13,7 +13,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFire, faTrophy } from "@fortawesome/free-solid-svg-icons";
 
-// Mock data (replace with your localStorage data)
+// Mock data 
 const mockHabits = [
   {
     id: 1,
@@ -33,7 +33,7 @@ function Statistics() {
   const [habits, setHabits] = useState(mockHabits);
   const [timeFrame, setTimeFrame] = useState("week");
 
-  // Load habits from localStorage (uncomment when ready)
+
   /*
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("habitTrackerState") || "[]");
@@ -98,15 +98,15 @@ function Statistics() {
   const COLORS = ["#84CC16", "#A3E635", "#D4D4D8", "#9CA3AF"]; // Lime shades and grays
 
   return (
-    <div className="p-5 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-semibold text-lime-300 mb-5">Statistics</h1>
+    <div className="p-4 md:p-6 max-w-4xl mx-auto">
+      <h1 className="text-2xl md:text-3xl font-semibold text-lime-300 mb-4 md:mb-6">Statistics</h1>
 
       {/* Filter */}
-      <div className="mb-5">
+      <div className="mb-4 md:mb-6 w-full md:w-auto">
         <select
           value={timeFrame}
           onChange={(e) => setTimeFrame(e.target.value)}
-          className="p-2 bg-gray-900 text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-300"
+          className="w-full md:w-auto p-2 text-sm md:text-base bg-gray-900 text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-300"
         >
           <option value="week">Last 7 Days</option>
           <option value="month">Last 30 Days</option>
@@ -114,57 +114,48 @@ function Statistics() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
-        <div className="bg-[rgb(51,51,51)] rounded-2xl p-5 flex items-center gap-3">
-          <FontAwesomeIcon icon={faTrophy} className="text-lime-300 text-2xl" />
-          <div>
-            <p className="text-gray-400">Total Completions</p>
-            <p className="text-xl text-lime-300">{totalCompletions}</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 mb-4 md:mb-6">
+        {[
+          { icon: faTrophy, label: "Total Completions", value: totalCompletions },
+          { icon: faFire, label: "Longest Streak", value: `${longestStreak} days` },
+          { icon: faTrophy, label: "Active Habits", value: habits.length }
+        ].map((stat, index) => (
+          <div key={index} className="bg-[rgb(51,51,51)] rounded-xl md:rounded-2xl p-3 md:p-5 flex items-center gap-2 md:gap-3">
+            <FontAwesomeIcon icon={stat.icon} className="text-lime-300 text-xl md:text-2xl" />
+            <div>
+              <p className="text-xs md:text-sm text-gray-400">{stat.label}</p>
+              <p className="text-lg md:text-xl text-lime-300">{stat.value}</p>
+            </div>
           </div>
-        </div>
-        <div className="bg-[rgb(51,51,51)] rounded-2xl p-5 flex items-center gap-3">
-          <FontAwesomeIcon icon={faFire} className="text-lime-300 text-2xl" />
-          <div>
-            <p className="text-gray-400">Longest Streak</p>
-            <p className="text-xl text-lime-300">{longestStreak} days</p>
-          </div>
-        </div>
-        <div className="bg-[rgb(51,51,51)] rounded-2xl p-5 flex items-center gap-3">
-          <FontAwesomeIcon icon={faTrophy} className="text-lime-300 text-2xl" />
-          <div>
-            <p className="text-gray-400">Active Habits</p>
-            <p className="text-xl text-lime-300">{habits.length}</p>
-          </div>
-        </div>
+        ))}
       </div>
 
       {/* Bar Chart */}
-      <div className="bg-[rgb(51,51,51)] rounded-2xl p-5 mb-5">
-        <h2 className="text-xl text-gray-300 mb-3">Completion Trend</h2>
-        <div style={{ height: "300px" }}>
+      <div className="bg-[rgb(51,51,51)] rounded-xl md:rounded-2xl p-3 md:p-5 mb-4 md:mb-6">
+        <h2 className="text-lg md:text-xl text-gray-300 mb-2 md:mb-3">Completion Trend</h2>
+        <div style={{ height: "250px", minHeight: "200px" }} className="w-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={chartData}>
-              <XAxis dataKey="date" stroke="#9CA3AF" />
-              <YAxis stroke="#9CA3AF" />
+              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
+              <YAxis stroke="#9CA3AF" fontSize={12} />
               <Tooltip
                 contentStyle={{
                   backgroundColor: "#333",
                   border: "none",
                   color: "#D4D4D8",
+                  fontSize: 12
                 }}
               />
-              <Bar dataKey="completions" fill="#84CC16" />
+              <Bar dataKey="completions" fill="#84CC16" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
 
       {/* Pie Chart */}
-      <div className="bg-[rgb(51,51,51)] rounded-2xl p-5">
-        <h2 className="text-xl text-gray-300 mb-3">Habits by Category</h2>
-        <div
-          style={{ height: "250px", display: "flex", justifyContent: "center" }}
-        >
+      <div className="bg-[rgb(51,51,51)] rounded-xl md:rounded-2xl p-3 md:p-5">
+        <h2 className="text-lg md:text-xl text-gray-300 mb-2 md:mb-3">Habits by Category</h2>
+        <div style={{ height: "200px", minHeight: "150px" }} className="w-full">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
@@ -173,10 +164,12 @@ function Statistics() {
                 nameKey="name"
                 cx="50%"
                 cy="50%"
-                outerRadius={80}
+                outerRadius={60}
+                innerRadius={30}
                 label={({ name, percent }) =>
                   `${name} (${(percent * 100).toFixed(0)}%)`
                 }
+                labelLine={false}
               >
                 {pieData.map((entry, index) => (
                   <Cell
@@ -190,6 +183,7 @@ function Statistics() {
                   backgroundColor: "#333",
                   border: "none",
                   color: "#D4D4D8",
+                  fontSize: 12
                 }}
               />
             </PieChart>
@@ -199,5 +193,3 @@ function Statistics() {
     </div>
   );
 }
-
-export default Statistics;
