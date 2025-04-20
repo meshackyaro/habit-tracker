@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
+import { HiArrowLeft } from "react-icons/hi";
 import {
   BarChart,
   Bar,
@@ -13,7 +15,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFire, faTrophy } from "@fortawesome/free-solid-svg-icons";
 
-// Mock data 
+// Mock data
 const mockHabits = [
   {
     id: 1,
@@ -32,7 +34,6 @@ const mockHabits = [
 function Statistics() {
   const [habits, setHabits] = useState(mockHabits);
   const [timeFrame, setTimeFrame] = useState("week");
-
 
   /*
   useEffect(() => {
@@ -95,18 +96,32 @@ function Statistics() {
   }));
 
   // Colors for pie chart slices
-  const COLORS = ["#84CC16", "#A3E635", "#D4D4D8", "#9CA3AF"]; // Lime shades and grays
-
+  const COLORS = ["#84CC16", "#A3E635", "#D4D4D8", "#9CA3AF"];
+  const navigate = useNavigate();
+ // Lime shades and grays
   return (
-    <div className="p-4 md:p-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl md:text-3xl font-semibold text-lime-300 mb-4 md:mb-6">Statistics</h1>
+    <div className="relative p-4 md:p-6 max-w-6xl mx-auto">
+      {/* Back Button */}
+      <div className="absolute top-4 left-4 z-10">
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center text-lime-300 hover:text-lime-400 transition"
+        >
+          <HiArrowLeft className="mr-1" />
+          Back
+        </button>
+      </div>
+
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold text-lime-300 mb-4 md:mb-6 mt-8">
+        Statistics
+      </h1>
 
       {/* Filter */}
-      <div className="mb-4 md:mb-6 w-full md:w-auto">
+      <div className="mb-4 md:mb-6">
         <select
           value={timeFrame}
           onChange={(e) => setTimeFrame(e.target.value)}
-          className="w-full md:w-auto p-2 text-sm md:text-base bg-gray-900 text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-300"
+          className="w-full sm:w-auto p-2 sm:p-2.5 text-sm sm:text-base bg-gray-900 text-gray-300 border border-lime-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-300 transition"
         >
           <option value="week">Last 7 Days</option>
           <option value="month">Last 30 Days</option>
@@ -116,15 +131,29 @@ function Statistics() {
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 mb-4 md:mb-6">
         {[
-          { icon: faTrophy, label: "Total Completions", value: totalCompletions },
-          { icon: faFire, label: "Longest Streak", value: `${longestStreak} days` },
-          { icon: faTrophy, label: "Active Habits", value: habits.length }
+          {
+            icon: faTrophy,
+            label: "Total Completions",
+            value: totalCompletions,
+          },
+          {
+            icon: faFire,
+            label: "Longest Streak",
+            value: `${longestStreak} days`,
+          },
+          { icon: faTrophy, label: "Active Habits", value: habits.length },
         ].map((stat, index) => (
-          <div key={index} className="bg-[rgb(51,51,51)] rounded-xl md:rounded-2xl p-3 md:p-5 flex items-center gap-2 md:gap-3">
-            <FontAwesomeIcon icon={stat.icon} className="text-lime-300 text-xl md:text-2xl" />
+          <div
+            key={index}
+            className="bg-[rgb(51,51,51)] rounded-xl md:rounded-2xl p-3 md:p-5 flex items-center gap-3 sm:gap-4"
+          >
+            <FontAwesomeIcon
+              icon={stat.icon}
+              className="text-lime-300 text-lg sm:text-xl md:text-2xl"
+            />
             <div>
-              <p className="text-xs md:text-sm text-gray-400">{stat.label}</p>
-              <p className="text-lg md:text-xl text-lime-300">{stat.value}</p>
+              <p className="text-xs sm:text-sm text-gray-400">{stat.label}</p>
+              <p className="text-lg sm:text-xl text-lime-300">{stat.value}</p>
             </div>
           </div>
         ))}
@@ -132,18 +161,20 @@ function Statistics() {
 
       {/* Bar Chart */}
       <div className="bg-[rgb(51,51,51)] rounded-xl md:rounded-2xl p-3 md:p-5 mb-4 md:mb-6">
-        <h2 className="text-lg md:text-xl text-gray-300 mb-2 md:mb-3">Completion Trend</h2>
-        <div style={{ height: "250px", minHeight: "200px" }} className="w-full">
+        <h2 className="text-lg sm:text-xl text-gray-300 mb-2 md:mb-3">
+          Completion Trend
+        </h2>
+        <div className="w-full min-w-0" style={{ height: "250px" }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={chartData}>
-              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
-              <YAxis stroke="#9CA3AF" fontSize={12} />
+              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={10} />
+              <YAxis stroke="#9CA3AF" fontSize={10} />
               <Tooltip
                 contentStyle={{
                   backgroundColor: "#333",
                   border: "none",
                   color: "#D4D4D8",
-                  fontSize: 12
+                  fontSize: 12,
                 }}
               />
               <Bar dataKey="completions" fill="#84CC16" radius={[4, 4, 0, 0]} />
@@ -154,8 +185,10 @@ function Statistics() {
 
       {/* Pie Chart */}
       <div className="bg-[rgb(51,51,51)] rounded-xl md:rounded-2xl p-3 md:p-5">
-        <h2 className="text-lg md:text-xl text-gray-300 mb-2 md:mb-3">Habits by Category</h2>
-        <div style={{ height: "200px", minHeight: "150px" }} className="w-full">
+        <h2 className="text-lg sm:text-xl text-gray-300 mb-2 md:mb-3">
+          Habits by Category
+        </h2>
+        <div className="w-full min-w-0" style={{ height: "200px" }}>
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
@@ -183,7 +216,7 @@ function Statistics() {
                   backgroundColor: "#333",
                   border: "none",
                   color: "#D4D4D8",
-                  fontSize: 12
+                  fontSize: 12,
                 }}
               />
             </PieChart>

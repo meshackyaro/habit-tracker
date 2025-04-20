@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { useAppState } from "../hooks/useAppState";
 import welcomePng from "../assets/images/welcomePng.png";
-import { useNavigate } from "react-router";
-
-
+import { useNavigate } from "react-router"; // ✅ Make sure this is react-router-dom
 
 const WelcomePage = () => {
   const { activeUser } = useAppState();
@@ -12,18 +10,16 @@ const WelcomePage = () => {
   const [userGenderBox, setUserGenderBox] = useState(false);
   const [user, setUser] = useState({ name: "", gender: "" });
 
-  // Validation functions
   const validateName = (e) => {
     if (e.target.value.trim() === "") return;
-    setUser(prev => ({ ...prev, name: e.target.value }));
+    setUser((prev) => ({ ...prev, name: e.target.value }));
   };
 
   const validateGender = (e) => {
     if (e.target.value === "") return;
-    setUser(prev => ({ ...prev, gender: e.target.value }));
+    setUser((prev) => ({ ...prev, gender: e.target.value }));
   };
 
-  // Called when clicking "Save" after entering name
   const proceedToGender = () => {
     if (user.name.trim()) {
       setUserNameBox(false);
@@ -31,59 +27,82 @@ const WelcomePage = () => {
     }
   };
 
-  // Called when clicking "Let's Go!" after selecting gender
   const setUsertoLocalHost = () => {
     if (user.name && user.gender) {
       activeUser(user);
       navigate("/dashboard");
     }
   };
+
   return (
-    <div className="h-screen bg-black flex flex-col items-center justify-center">
-      <h1 className="text-[70px] text-white">Welcome to Habit Tracker!</h1>
-      <img src={welcomePng} alt="" className="h-[300px]" />
-      <h3 className="text-white">
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4 text-center">
+      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white font-bold mb-6">
+        Welcome to Habit Tracker!
+      </h1>
+
+      <img
+        src={welcomePng}
+        alt="Welcome"
+        className="h-40 sm:h-56 md:h-72 lg:h-80 mb-6 object-contain"
+      />
+
+      <h3 className="text-white text-lg sm:text-xl mb-4">
         Step into a Better You with our Habit Tracker!
       </h3>
-      <button className="w-[200px] cursor-pointer text-center py-3 rounded-lg mt-5 text-lg text-white border border-yellow-300  bg-[rgba(23,23,23,0.781)] transition-all duration-300 hover:bg-yellow-400 hover:text-black hover:shadow-[0_0_100px_1px_green]" onClick={() => setUserNameBox(true)}>
+
+      <button
+        className="w-52 cursor-pointer py-3 rounded-lg text-lg text-white border border-yellow-300 bg-[rgba(23,23,23,0.781)] transition-all duration-300 hover:bg-yellow-400 hover:text-black hover:shadow-[0_0_100px_1px_green]"
+        onClick={() => setUserNameBox(true)}
+      >
         Let's Begin! 🚀
       </button>
 
+      {/* Username Modal */}
       {userNameBox && (
-        <div className="fixed h-full backdrop-blur-md flex justify-center items-center">
-          <div className="text-white bg-[rgb(32,32,32)] rounded-2xl p-8 flex flex-col gap-2.5 items-center">
-            <h2>Before We Start! How shall we call You...</h2>
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex justify-center items-center px-4">
+          <div className="text-white bg-[rgb(32,32,32)] rounded-2xl p-6 sm:p-8 w-full max-w-md flex flex-col gap-4 items-center shadow-lg">
+            <h2 className="text-xl sm:text-2xl font-semibold">
+              Before We Start!
+            </h2>
+            <p className="text-sm sm:text-base">How shall we call you?</p>
             <input
               type="text"
-              className="h-10 rounded-lg px-2.5 outline-none text-base bg-[rgba(255,255,255,0.329)] text-white w-full transition-all duration-300 focus:outline-1 focus:outline-[rgb(225,225,179)] placeholder-[rgba(255,255,255,0.616)]"
+              className="h-10 rounded-lg px-3 outline-none text-base bg-[rgba(255,255,255,0.329)] text-white w-full placeholder-[rgba(255,255,255,0.616)] focus:outline-yellow-200"
               placeholder="Please Enter Your Name!"
               onChange={validateName}
             />
-            <button className="cursor-pointer text-center py-2.5 px-6 rounded-lg text-base border border-yellow-300 text-white bg-[rgba(23,23,23,0.781)]" onClick={proceedToGender}>
+            <button
+              className="mt-2 py-2 px-6 rounded-lg border border-yellow-300 text-white bg-[rgba(23,23,23,0.781)] hover:bg-yellow-400 hover:text-black transition"
+              onClick={proceedToGender}
+            >
               Save
             </button>
           </div>
         </div>
       )}
 
+      {/* Gender Modal */}
       {userGenderBox && (
-        <div className="fixed h-full backdrop-blur-md flex justify-center items-center">
-          <div className="text-white bg-[rgb(32,32,32)] rounded-2xl p-8 flex flex-col gap-2.5 items-center">
-            <h2>Hey {user.name}!</h2>
-            <h3 className="text-center">To tailor your experience,
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex justify-center items-center px-4">
+          <div className="text-white bg-[rgb(32,32,32)] rounded-2xl p-6 sm:p-8 w-full max-w-md flex flex-col gap-4 items-center shadow-lg">
+            <h2 className="text-xl sm:text-2xl font-semibold">
+              Hey {user.name}!
+            </h2>
+            <h3 className="text-sm sm:text-base text-center">
+              To tailor your experience,
               <br /> could you let us know your gender?
             </h3>
             <select
-              className="h-10 rounded-lg px-2.5 outline-none text-base bg-gray-500 w-full transition-all duration-300"
+              className="h-10 rounded-lg px-3 outline-none text-base bg-gray-500 w-full"
               onChange={validateGender}
-              placeholder="Gender"
             >
               <option value="">Select</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
               <option value="Others">Others</option>
             </select>
-            <button className="cursor-pointer text-center py-2.5 px-6 rounded-lg text-base border border-yellow-300 text-white bg-[rgba(23,23,23,0.781)]"
+            <button
+              className="mt-2 py-2 px-6 rounded-lg border border-yellow-300 text-white bg-[rgba(23,23,23,0.781)] hover:bg-yellow-400 hover:text-black transition"
               onClick={() => user.gender && setUsertoLocalHost()}
             >
               Let's Go!
@@ -95,4 +114,4 @@ const WelcomePage = () => {
   );
 };
 
-export default WelcomePage
+export default WelcomePage;

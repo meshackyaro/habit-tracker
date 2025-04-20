@@ -120,75 +120,78 @@ const Dashboard = () => {
    // const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     return (
-            <div className="flex flex-col md:flex-row h-auto p-2 md:p-5 bg-[#010101] text-white gap-3 md:gap-5">
-                <SideNavbar activeNav={activeNav} />
+      <div className="flex flex-col md:flex-row min-h-screen p-3 sm:p-4 md:p-6 bg-[#010101] text-white gap-4">
+        <SideNavbar activeNav={activeNav} />
 
-                <div className="rounded-2xl p-3 md:p-5 w-full md:w-[calc(100%-220px)] text-start bg-[rgba(20,20,20,0.8)]">
-                    <h1 className="greeting-user font-extrabold text-2xl md:text-3xl">
-                        Welcome {userData ? userData.name : "Fetching..."}!
-                    </h1>
+        <div className="rounded-2xl p-3 md:p-5 w-full md:w-[calc(100%-220px)] text-start bg-[rgba(20,20,20,0.8)]">
+          <h1 className="greeting-user font-extrabold text-2xl md:text-3xl">
+            Welcome {userData ? userData.name : "Fetching..."}!
+          </h1>
 
-                    {/* Date Picker */}
-                    <div className="w-full overflow-x-auto pb-2 flex gap-2 my-2 md:gap-2.5 md:my-2.5">
-                        {datesList.map((date, index) => (
-                            <div
-                                key={index}
-                                className={`h-16 md:h-20 min-w-[60px] md:min-w-[70px] rounded-lg bg-[rgb(27,27,27)] flex flex-col items-center justify-center text-sm md:text-base ${date.formatted === todayDate.formatted
-                                        ? 'bg-lime-300 text-black'
-                                        : ''
-                                    }`}
-                            >
-                                <span className="font-bold">{date.dayOfWeek}</span>
-                                <span className="font-bold">{date.day}</span>
-                                <span className="font-bold">{date.month}</span>
-                            </div>
-                        ))}
-                    </div>
+          {/* Date Picker */}
+          <div className="w-full overflow-x-auto scrollbar-hide pb-2 flex gap-2 md:gap-3 my-2 md:my-3">
+            {datesList.map((date, index) => (
+              <div
+                key={index}
+                className={`h-16 md:h-20 min-w-[60px] md:min-w-[70px] rounded-lg bg-[rgb(27,27,27)] flex flex-col items-center justify-center text-sm md:text-base ${
+                  date.formatted === todayDate.formatted
+                    ? "bg-lime-300 text-black"
+                    : ""
+                }`}
+              >
+                <span className="font-bold">{date.dayOfWeek}</span>
+                <span className="font-bold">{date.day}</span>
+                <span className="font-bold">{date.month}</span>
+              </div>
+            ))}
+          </div>
 
-                    <h2 className="mt-5 md:mt-7 font-bold text-lg md:text-xl">Today's Habits</h2>
+          <h2 className="mt-5 md:mt-7 font-bold text-lg md:text-xl">
+            Today's Habits
+          </h2>
 
-                    {/* Habits Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5 mt-2 md:mt-2.5 w-full">
-                        {userData?.habitData?.map((habit, index) => (
-                            <Habit
-                                key={habit.id}
-                                habit={habit}
-                                index={index}
-                                setShowPrevRecord={setShowPrevRecord}
-                                setActiveHabitData={setActiveHabitData}
-                            />
-                        ))}
-                    </div>
+          {/* Habits Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-3 w-full">
+            {userData?.habitData?.map((habit, index) => (
+              <Habit
+                key={habit.id}
+                habit={habit}
+                index={index}
+                setShowPrevRecord={setShowPrevRecord}
+                setActiveHabitData={setActiveHabitData}
+              />
+            ))}
+          </div>
 
-                    {/* Button Container */}
-                    <div className="flex flex-col sm:flex-row justify-between gap-3 mt-4 md:mt-5 px-2 md:px-5 z-10">
-                        <button
-                            className="bg-blue-500 text-base md:text-lg py-2 px-4 md:py-3 md:px-5 rounded-full cursor-pointer transition-all duration-300 hover:shadow-[0_0_20px_0px_rgb(0,0,255)] md:hover:shadow-[0_0_50px_0px_rgb(0,0,255)]"
-                            onClick={resetHabits}
-                        >
-                            Reset Habits
-                        </button>
-                        <button
-                            className="bg-green-400 text-base md:text-lg py-2 px-4 md:py-3 md:px-5 rounded-full cursor-pointer transition-all duration-300 hover:shadow-[0_0_20px_0px_rgb(170,255,0)] md:hover:shadow-[0_0_50px_0px_rgb(170,255,0)]"
-                            onClick={() => setCreateBoxStatus(true)}
-                        >
-                            Add Habit +
-                        </button>
-                    </div>
-                </div>
+          {/* Button Container */}
+          <div className="flex flex-col sm:flex-row justify-center sm:justify-between gap-3 mt-5 px-2 md:px-6">
+            <button
+              className="w-full sm:w-auto bg-green-500 text-base md:text-lg py-2 px-4 md:py-3 md:px-6 rounded-full transition-all duration-300 hover:shadow-[0_0_20px_0px_rgb(0,0,255)] md:hover:shadow-[0_0_50px_0px_rgb(0,0,255)]"
+              onClick={() => setCreateBoxStatus(true)}
+            >
+              Add Habit +
+            </button>
+            <button
+              className="w-full sm:w-auto bg-red-500 text-base md:text-lg py-2 px-4 md:py-3 md:px-6 rounded-full transition-all duration-300 hover:shadow-[0_0_20px_0px_rgb(0,0,255)] md:hover:shadow-[0_0_50px_0px_rgb(0,0,255)]"
+              onClick={resetHabits}
+            >
+              Reset Habits
+            </button>
+          </div>
+        </div>
 
-                {/* Modals- */}
-                {createBoxStatus && (
-                    <CreateHabit setCreateBoxStatus={setCreateBoxStatus} />
-                )}
-                {showPrevRecord && (
-                    <PrevRecord
-                        setShowPrevRecord={setShowPrevRecord}
-                        activeHabitData={activeHabitData}
-                    />
-                )}
-            </div>
-    )
+        {/* Modals- */}
+        {createBoxStatus && (
+          <CreateHabit setCreateBoxStatus={setCreateBoxStatus} />
+        )}
+        {showPrevRecord && (
+          <PrevRecord
+            setShowPrevRecord={setShowPrevRecord}
+            activeHabitData={activeHabitData}
+          />
+        )}
+      </div>
+    );
 };
 
 export default Dashboard;

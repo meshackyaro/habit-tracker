@@ -116,3 +116,10 @@ body {
   color: var(--accent);
   /* Replace yellow-200 with accent */
 }
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
